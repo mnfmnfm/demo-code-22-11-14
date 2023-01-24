@@ -1,7 +1,7 @@
 // pull in the express dependency
 const express = require("express");
 // actually set up an express app
-const app = express;
+const app = express();
 
 // use morgan to log all requests
 const morgan = require("morgan");
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 // where the magic happens: the actual routes that define our server
 
 // when a request comes to /current-time
-const currentTimeHandler = (req, res, next) => {
+const currentTime = (req, res, next) => {
     // log and send the time
     console.log('got a request for the current time');
     let currentDate = new Date();
@@ -31,15 +31,15 @@ app.get('/current-time', currentTime);
 app.get('/welcome', (req, res, next) => {
     // req.query to access query string data
     // let firstName = req.query.firstname;
-    let {firstname} = req.query;
-    if (firstname && (firstname.length > 2)) {
-        res.send(`Welcome to the site, ${firstname}!`);
+    let {firstName} = req.query;
+    if (firstName && (firstName.length > 2)) {
+        res.send(`Welcome to the site, ${firstName}!`);
     } else {
         // trigger error handler
         next({
             status: 400,
             //      What ? True : False
-            message: firstname ? 'The firstName must be at least 3 letters long' : 'You must supply a firstName query parameter.'
+            message: firstName ? 'The firstName must be at least 3 letters long' : 'You must supply a firstName query parameter.'
         });
     }
 });
@@ -55,7 +55,8 @@ app.get('/books/recent', (req, res, next) => {
 });
 
 app.get('/', (req, res, next) => {
-    res.status('This is the root.');
+    // it's like we get to run code here & see what it does
+    res.send('This is the root.');
 })
 
 // middleware to validate that the area code is real
@@ -70,12 +71,12 @@ let areaCodeValidator = (req, res, next) => {
     if(code.length !== 3) {
         next({
             status: 400,
-            mesage: 'Area codes must be 3 characters long.'
+            message: 'Area codes must be 3 characters long.'
         });
     }
     // has to be all numbers
     else if(!/^\d+$/.test(code)) {
-        nxt({
+        next({
             status: 400,
             message: 'Area codes must be all numbers.'
         })
@@ -102,8 +103,8 @@ const {codeToState} = require('../data/areacodes.js');
 app.get('/areacode/:code', areaCodeValidator, (req, res, next) => {
     // query params come from the query string, after the question mark in the URL
     // let name = req.query.name;
-    const state = codeToState[req.query.code];
-    res.send(`The area code ${req.query.code} comes from ${state}.`);
+    const state = codeToState[req.params.code];
+    res.send(`The area code ${req.params.code} comes from ${state}.`);
 });
 
 
