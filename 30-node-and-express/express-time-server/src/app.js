@@ -15,22 +15,22 @@ app.use((req, res, next) => {
     next();
 });
 
-// where the magic will happen... soon
+// where the magic happens: the actual routes that define our server
 
 // when a request comes to /current-time
-const currentTimeHandler = (req, res, next) => {
+const currentTime = (req, res, next) => {
     // log and send the time
     console.log('got a request for the current time');
     let currentDate = new Date();
     res.send(currentDate.toString());
 };
-app.get('/current-time', currentTimeHandler);
+app.get('/current-time', currentTime);
 
 
-// expecting query parameters of firstName
+// expecting query parameters of firstname
 app.get('/welcome', (req, res, next) => {
     // req.query to access query string data
-    // let firstName = req.query.firstName;
+    // let firstName = req.query.firstname;
     let {firstName} = req.query;
     if (firstName && (firstName.length > 2)) {
         res.send(`Welcome to the site, ${firstName}!`);
@@ -44,17 +44,18 @@ app.get('/welcome', (req, res, next) => {
     }
 });
 
+app.get('/books/:myBook', (req, res, next) => {
+    // access route parameters via req.params
+    let {book} = req.params;
+    res.send(`This book is called ${book}.`);
+});
+
 app.get('/books/recent', (req, res, next) => {
     res.send('You have read 300 books recently. Nice work.');
 });
 
-app.get('/books/:coolBook', (req, res, next) => {
-    // access route parameters via req.params
-    let {coolBook} = req.params;
-    res.send(`This Book is called ${coolBook}.`);
-});
-
 app.get('/', (req, res, next) => {
+    // it's like we get to run code here & see what it does
     res.send('This is the root.');
 })
 
@@ -63,6 +64,8 @@ let areaCodeValidator = (req, res, next) => {
     // destructuring is fun
     let {code} = req.params;
     // let code = req.params.code;
+
+    // if the area code is invalid, call next({message: 'an error message'})
     // how do we know the area code is invalid?
     // too long, too short = needs to be exactly 3 chars
     if(code.length !== 3) {
@@ -90,7 +93,7 @@ let areaCodeValidator = (req, res, next) => {
         next();
     }
 
-    // if the area code is invalid, call next({message: 'an error message'})
+    
 };
 
 // pull in object from file

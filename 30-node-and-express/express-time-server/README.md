@@ -2,6 +2,14 @@
 
 This application serves the current time at `/current-time`, as well as performing some other useful tasks.
 
+## Jan 24 Afternoon Lecture Topics
+
+- Remember that Q&A exists, every night after working hours - a GREAT resource for working on React
+- Review topics?
+- The Debugger
+  - Usage with node - creating `launch.json` file
+  - Debugging my broken app together
+
 ## Jan 24 Morning Lecture Topics
 
 - Make sure to make Node progress over making React progress
