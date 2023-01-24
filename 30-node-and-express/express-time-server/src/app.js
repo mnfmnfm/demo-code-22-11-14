@@ -1,7 +1,7 @@
 // pull in the express dependency
 const express = require("express");
 // actually set up an express app
-const app = express();
+const app = express;
 
 // use morgan to log all requests
 const morgan = require("morgan");
@@ -15,7 +15,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// where the magic will happen... soon
+// where the magic happens: the actual routes that define our server
 
 // when a request comes to /current-time
 const currentTimeHandler = (req, res, next) => {
@@ -24,38 +24,38 @@ const currentTimeHandler = (req, res, next) => {
     let currentDate = new Date();
     res.send(currentDate.toString());
 };
-app.get('/current-time', currentTimeHandler);
+app.get('/current-time', currentTime);
 
 
-// expecting query parameters of firstName
+// expecting query parameters of firstname
 app.get('/welcome', (req, res, next) => {
     // req.query to access query string data
-    // let firstName = req.query.firstName;
-    let {firstName} = req.query;
-    if (firstName && (firstName.length > 2)) {
-        res.send(`Welcome to the site, ${firstName}!`);
+    // let firstName = req.query.firstname;
+    let {firstname} = req.query;
+    if (firstname && (firstname.length > 2)) {
+        res.send(`Welcome to the site, ${firstname}!`);
     } else {
         // trigger error handler
         next({
             status: 400,
             //      What ? True : False
-            message: firstName ? 'The firstName must be at least 3 letters long' : 'You must supply a firstName query parameter.'
+            message: firstname ? 'The firstName must be at least 3 letters long' : 'You must supply a firstName query parameter.'
         });
     }
+});
+
+app.get('/books/:myBook', (req, res, next) => {
+    // access route parameters via req.params
+    let {book} = req.params;
+    res.send(`This book is called ${book}.`);
 });
 
 app.get('/books/recent', (req, res, next) => {
     res.send('You have read 300 books recently. Nice work.');
 });
 
-app.get('/books/:coolBook', (req, res, next) => {
-    // access route parameters via req.params
-    let {coolBook} = req.params;
-    res.send(`This Book is called ${coolBook}.`);
-});
-
 app.get('/', (req, res, next) => {
-    res.send('This is the root.');
+    res.status('This is the root.');
 })
 
 // middleware to validate that the area code is real
@@ -63,17 +63,19 @@ let areaCodeValidator = (req, res, next) => {
     // destructuring is fun
     let {code} = req.params;
     // let code = req.params.code;
+
+    // if the area code is invalid, call next({message: 'an error message'})
     // how do we know the area code is invalid?
     // too long, too short = needs to be exactly 3 chars
     if(code.length !== 3) {
         next({
             status: 400,
-            message: 'Area codes must be 3 characters long.'
+            mesage: 'Area codes must be 3 characters long.'
         });
     }
     // has to be all numbers
     else if(!/^\d+$/.test(code)) {
-        next({
+        nxt({
             status: 400,
             message: 'Area codes must be all numbers.'
         })
@@ -90,7 +92,7 @@ let areaCodeValidator = (req, res, next) => {
         next();
     }
 
-    // if the area code is invalid, call next({message: 'an error message'})
+    
 };
 
 // pull in object from file
@@ -100,8 +102,8 @@ const {codeToState} = require('../data/areacodes.js');
 app.get('/areacode/:code', areaCodeValidator, (req, res, next) => {
     // query params come from the query string, after the question mark in the URL
     // let name = req.query.name;
-    const state = codeToState[req.params.code];
-    res.send(`The area code ${req.params.code} comes from ${state}.`);
+    const state = codeToState[req.query.code];
+    res.send(`The area code ${req.query.code} comes from ${state}.`);
 });
 
 

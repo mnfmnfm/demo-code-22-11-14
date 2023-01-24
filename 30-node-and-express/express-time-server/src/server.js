@@ -6,4 +6,4 @@ const app = require("./app");
 // defining a function that will console.log the port
 const listener = () => console.log(`Listening on Port ${PORT}!`);
 // setting up our server to listen on that port, and console.log when it's ready
-app.listen(PORT, listener);
+app.listen(listener, PORT);
