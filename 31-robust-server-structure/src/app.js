@@ -52,7 +52,7 @@ app.post('/birds', (req, res, next) => {
   // add the bird into our array of birds
   birds.push(newBird);
   // send the bird data back with a 201 response code
-  res.status(201).json(newBird);
+  res.status(201).json({data: newBird});
 });
 
 app.delete('/birds/:id', (req, res, next) => {
