@@ -92,8 +92,6 @@ let areaCodeValidator = (req, res, next) => {
     else {
         next();
     }
-
-    
 };
 
 // pull in object from file

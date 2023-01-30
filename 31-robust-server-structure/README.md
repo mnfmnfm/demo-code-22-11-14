@@ -1,6 +1,5 @@
 # Lecture Topics
 
-## Jan 26 Morning Lecture
 ## Jan 25 Afternoon Lecture
 
 - Hello!
