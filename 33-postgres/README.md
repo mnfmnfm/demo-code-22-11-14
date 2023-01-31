@@ -1,5 +1,15 @@
 # Postgres Practice
 
+## Tuesday Jan 31 PM lecture
+
+- Hi! Review topics?
+  - create artist etc 
+- What we can do with SQL
+  - creating tables and data
+  - some helpful hints
+  - CRUDing
+  - special focus on SELECT
+
 ## Tuesday Jan 31 AM lecture
 - Hi! Happy Tuesday!
 - Make sure you're doing groupwork appropriately
