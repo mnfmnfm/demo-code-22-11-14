@@ -1,5 +1,14 @@
 # Related Data in Relational Databases
 
+## Wed Feb 1 PM Lecture
+
+- Hi! Review topics?
+- Many to Many Relationships
+  - Why they're so useful
+  - Why they're more complicated
+  - How to create one in our schema
+  - How to join across them
+
 ## Wed Feb 1 AM Lecture
 
 - Hi! Happy February!

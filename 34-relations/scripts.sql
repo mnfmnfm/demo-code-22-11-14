@@ -96,3 +96,40 @@ FROM orders
 JOIN items ON orders.item_id = items.id
 JOIN suppliers ON items.supplier_id = suppliers.id
 WHERE phone LIKE '49%';
+
+ALTER TABLE items
+  DROP COLUMN supplier_id;
+  
+CREATE TABLE suppliers_items (
+	supplier_id INTEGER REFERENCES suppliers(id),
+	item_id INTEGER REFERENCES items(id),
+	-- instead of generating an ID for this table (overkill), we'll use the combination of those two fields as the primary key
+	PRIMARY KEY (supplier_id, item_id)
+);
+
+INSERT INTO suppliers_items (supplier_id, item_id)
+VALUES 
+  (1, 2),
+  (1, 3),
+  (1, 4);
+  
+INSERT INTO suppliers_items(supplier_id, item_id) 
+VALUES
+	(2, 4),
+	(3,4);
+	
+SELECT item_name, supplier_name
+FROM items
+JOIN suppliers_items ON suppliers_items.item_id = items.id
+JOIN suppliers ON suppliers_items.supplier_id = suppliers.id;
+
+SELECT *
+FROM items
+JOIN suppliers_items ON suppliers_items.item_id = items.id
+JOIN suppliers ON suppliers_items.supplier_id = suppliers.id;
+
+SELECT item_name, supplier_name
+FROM items
+JOIN suppliers_items ON suppliers_items.item_id = items.id
+JOIN suppliers ON suppliers_items.supplier_id = suppliers.id
+WHERE city = 'Appleton';
