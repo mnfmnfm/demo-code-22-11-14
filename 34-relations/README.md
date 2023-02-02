@@ -1,5 +1,15 @@
 # Related Data in Relational Databases
 
+## Thurs Feb 2 AM Lecture
+
+- Hi!
+  - Only 4 people did the feedback survey last week - so tomorrow we'll take some lecture time for everyone to do it
+- Review topics?
+- ERD overview
+- Left/Right/Outer Joins
+- Debugging/Review time
+- Today's goal: finish module 34
+
 ## Wed Feb 1 PM Lecture
 
 - Hi! Review topics?
