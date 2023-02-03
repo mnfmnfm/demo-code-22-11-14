@@ -53,6 +53,12 @@ app.post('/puppies', (req, res, next) => {
   res.status(201).json({ data: newPuppy });
 });
 
+const knexInstance = require('./db/connection.js');
+app.get('/items', (req, res, next) => {
+  // get the items from the database & send the items in the response
+  knexInstance('items').whereILike('item_name', '%abaca%').then(data => res.json({ data }));
+})
+
 // 404 handler
 app.use((req, res, next) => {
   next(
