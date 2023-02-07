@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
 const articlesRouter = require("./articles/articles.router");
+const productsRouter = require("./products/products.router")
 
 // middlewario
 app.use(express.json());
 
 // routes
 app.use("/articles", articlesRouter)
+app.use("/products", productsRouter)
 
 // error handling
 // Not found handler
