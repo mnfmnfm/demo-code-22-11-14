@@ -13,6 +13,7 @@ const addSupplier = mapProperties({
   supplier_name: "supplier.supplier_name",
   supplier_city: "supplier.supplier_city",
   supplier_state: "supplier.supplier_state",
+  
 });
 
 function list() {
@@ -53,6 +54,19 @@ function listPriceSummary() {
 
 function read(product_id) {
     //join product and suppliers where product is matching the given id
+
+    // SELECT *
+    // FROM products AS p
+    // JOIN suppliers AS s
+    // ON s.supplier_id = p.supplier_id
+    // WHERE product_id = ${product_id}
+
+    return knex("products as p")
+      .select("*")
+      .join("suppliers as s", "s.supplier_id", "p.supplier_id")
+      .where({product_id})
+      .first() // get the first record
+      .then(addSupplier)
 }
 
 module.exports = {
